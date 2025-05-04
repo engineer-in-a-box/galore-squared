@@ -22,6 +22,7 @@ data:extend{
         subgroup = "vgal-intermediate-casting",
         enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "superconductor"}
@@ -45,6 +46,7 @@ data:extend{
         subgroup = "vgal-basic-intermediate-products",
         enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "copper-cable"}
@@ -69,6 +71,7 @@ data:extend{
         subgroup = "vgal-intermediate-casting",
         enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "copper-cable"}
@@ -92,8 +95,8 @@ data:extend{
         category = "cryogenics",
         subgroup = "uranium-processing",
         enabled = false,
-        allow_productivity = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "fusion-power-cell"}
@@ -116,9 +119,10 @@ data:extend{
             {type = "item", name = "space-platform-starter-pack", amount = 5}
         },
         energy_required = 120,
-        category = "crafting-with-fluid",
+        category = "electromagnetics",
         enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "space-platform-starter-pack", name = "space-platform-starter-pack"}
@@ -145,6 +149,7 @@ data:extend{
         subgroup = "vgal-intermediate-casting",
         enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "tungsten-plate"}
@@ -171,9 +176,10 @@ data:extend{
         energy_required = 45,
         category = "electromagnetics",
         subgroup = "vgal-module-speed",
-        enabled = false,
         main_product = "speed-module-3",
+        enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "module", name = "speed-module-3"}
@@ -200,9 +206,10 @@ data:extend{
         energy_required = 45,
         category = "electromagnetics",
         subgroup = "vgal-module-efficiency",
-        enabled = false,
         main_product = "efficiency-module-3",
+        enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "module", name = "efficiency-module-3"}
@@ -229,9 +236,10 @@ data:extend{
         energy_required = 45,
         category = "electromagnetics",
         subgroup = "vgal-module-productivity",
-        enabled = false,
         main_product = "productivity-module-3",
+        enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "module", name = "productivity-module-3"}
@@ -258,9 +266,10 @@ data:extend{
         energy_required = 45,
         category = "electromagnetics",
         subgroup = "vgal-module-quality",
-        enabled = false,
         main_product = "quality-module-3",
+        enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "module", name = "quality-module-3"}
@@ -284,6 +293,7 @@ data:extend{
         subgroup = "vgal-basic-intermediate-products",
         enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "copper-cable"}
@@ -311,9 +321,10 @@ data:extend{
         energy_required = 120,
         category = "electromagnetics",
         subgroup = "vgal-circuits-t3",
-        enabled = false,
         main_product = "processing-unit",
+        enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "processing-unit"}
@@ -340,6 +351,7 @@ data:extend{
         subgroup = "vgal-chemistry-products",
         enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "battery"}
@@ -364,6 +376,7 @@ data:extend{
         subgroup = "agriculture-products",
         enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "capsule", name = "bioflux"}
@@ -392,6 +405,7 @@ data:extend{
         subgroup = "intermediate-product",
         enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "supercapacitor"}
@@ -418,6 +432,7 @@ data:extend{
         subgroup = "vgal-rocket-parts",
         enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "rocket-part"}
@@ -445,6 +460,7 @@ data:extend{
         subgroup = "raw-resource",
         enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "lithium"}
@@ -471,6 +487,7 @@ data:extend{
         subgroup = "vgal-rocket-parts",
         enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "rocket-part"}
@@ -497,6 +514,7 @@ data:extend{
         subgroup = "vgal-rocket-parts",
         enabled = false,
         allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "rocket-part"}
@@ -522,12 +540,63 @@ data:extend{
         category = "metallurgy",
         subgroup = "vgal-engines",
         enabled = false,
+        allow_as_intermediate = false,
+        allow_productivity = true,
         icons = icons.recipe_icon(
             {
                 {type = "item", name = "engine-unit"}
             },
             {
                 {type = "item", name = "tungsten-plate"},
+                "none"
+            }
+        )
+    },
+    {
+        type = "recipe",
+        name = "vgal-engine-unit-assembling-machine-1",
+        ingredients = {
+            {type = "item", name = "engine-unit", amount = 2},
+            {type = "item", name = "steel-plate", amount = 1}
+        },
+        results = {
+            {type = "item", name = "assembling-machine-1", amount = 1}
+        },
+        energy_required = 1,
+        enabled = false,
+        allow_as_intermediate = false,
+        icons = icons.recipe_icon(
+            {
+                {type = "item", name = "assembling-machine-1"}
+            },
+            {
+                {type = "item", name = "engine-unit"}
+            }
+        )
+    },
+    {
+        type = "recipe",
+        name = "vgal-jelly-advanced-circuit",
+        ingredients = {
+            {type = "item", name = "copper-cable", amount = 6},
+            {type = "item", name = "jelly", amount = 2},
+            {type = "item", name = "electronic-circuit", amount = 3}
+        },
+        results = {
+            {type = "item", name = "advanced-circuit", amount = 2}
+        },
+        energy_required = 10,
+        category = "organic",
+        subgroup = "vgal-circuits-t2",
+        enabled = false,
+        allow_as_intermediate = false,
+        allow_productivity = true,
+        icons = icons.recipe_icon(
+            {
+                {type = "item", name = "advanced-circuit"}
+            },
+            {
+                {type = "capsule", name = "jelly"},
                 "none"
             }
         )
@@ -554,3 +623,5 @@ add_recipe("cryogenic-plant", "vgal-catalyst-lithium")
 add_recipe("lithium-processing", "vgal-lithium-plate-rocket-part")
 add_recipe("fusion-reactor", "vgal-lithium-plate-fusion-rocket-part")
 add_recipe("tungsten-steel", "vgal-tungsten-plate-engine-unit")
+add_recipe("engine", "vgal-engine-unit-assembling-machine-1")
+add_recipe("biochamber", "vgal-jelly-advanced-circuit")
