@@ -1,6 +1,11 @@
 icons = require("icons")
 
 local function add_recipe(tech, recipe)
+    for _, effect in pairs(data.raw["technology"][tech].effects) do
+        if effect.type == "unlock-recipe" and effect.recipe == recipe then
+            return
+        end
+    end
     table.insert(data.raw["technology"][tech].effects, {type = "unlock-recipe", recipe = recipe})
 end
 
@@ -48,6 +53,7 @@ data:extend{
             {type = "item", name = "copper-cable", amount = 2}
         },
         energy_required = 0.25,
+        category = "electronics",
         subgroup = "vgal-basic-intermediate-products",
         enabled = false,
         allow_as_intermediate = false,
@@ -304,6 +310,7 @@ data:extend{
             {type = "item", name = "copper-cable", amount = 12}
         },
         energy_required = 1,
+        category = "electronics",
         subgroup = "vgal-basic-intermediate-products",
         enabled = false,
         allow_as_intermediate = false,
@@ -440,14 +447,14 @@ data:extend{
         name = "vgal-fusion-rocket-part",
         ingredients = {
             {type = "item", name = "low-density-structure", amount = 1},
-            {type = "item", name = "advanced-circuit", amount = 3},
+            {type = "item", name = "processing-unit", amount = 1},
             {type = "item", name = "fusion-power-cell", amount = 1}
         },
         results = {
             {type = "item", name = "rocket-part", amount = 2}
         },
         energy_required = 4,
-        category = "advanced-crafting",
+        category = "rocket-building",
         subgroup = "vgal-rocket-parts",
         enabled = false,
         allow_as_intermediate = false,
@@ -496,15 +503,15 @@ data:extend{
         type = "recipe",
         name = "vgal-lithium-plate-rocket-part",
         ingredients = {
-            {type = "item", name = "lithium-plate", amount = 1},
+            {type = "item", name = "lithium-plate", amount = 3},
             {type = "item", name = "rocket-fuel", amount = 1},
-            {type = "item", name = "advanced-circuit", amount = 2}
+            {type = "item", name = "processing-unit", amount = 2}
         },
         results = {
             {type = "item", name = "rocket-part", amount = 3}
         },
         energy_required = 1.5,
-        category = "advanced-crafting",
+        category = "rocket-building",
         subgroup = "vgal-rocket-parts",
         enabled = false,
         allow_as_intermediate = false,
@@ -524,15 +531,15 @@ data:extend{
         type = "recipe",
         name = "vgal-lithium-plate-fusion-rocket-part",
         ingredients = {
-            {type = "item", name = "lithium-plate", amount = 1},
+            {type = "item", name = "lithium-plate", amount = 3},
             {type = "item", name = "fusion-power-cell", amount = 1},
-            {type = "item", name = "processing-unit", amount = 1}
+            {type = "item", name = "processing-unit", amount = 2}
         },
         results = {
             {type = "item", name = "rocket-part", amount = 5}
         },
         energy_required = 1.5,
-        category = "advanced-crafting",
+        category = "rocket-building",
         subgroup = "vgal-rocket-parts",
         enabled = false,
         allow_as_intermediate = false,
@@ -665,7 +672,7 @@ data:extend{
             {type = "item", name = "rocket-part", amount = 1}
         },
         energy_required = 0.5,
-        category = "organic",
+        category = "rocket-building",
         subgroup = "vgal-rocket-parts",
         enabled = false,
         allow_as_intermediate = false,
@@ -991,7 +998,7 @@ data:extend{
         },
         results = {
             {type = "item", name = "holmium-plate", amount = 5},
-            {type = "fluid", name = "lithium-brine", amount = 4, ignored_by_productivity = 4}
+            {type = "fluid", name = "lithium-brine", amount = 1, ignored_by_productivity = 1}
         },
         energy_required = 40,
         category = "cryogenics",
@@ -1017,18 +1024,16 @@ data:extend{
         ingredients = {
             {type = "fluid", name = "thruster-fuel", amount = 5000},
             {type = "fluid", name = "thruster-oxidizer", amount = 5000},
-            {type = "fluid", name = "fluoroketone-cold", amount = 200},
+            {type = "fluid", name = "fluoroketone-cold", amount = 100},
             {type = "item", name = "low-density-structure", amount = 20},
             {type = "item", name = "processing-unit", amount = 20}
         },
         results = {
-            {type = "item", name = "rocket-part", amount = 50},
-            {type = "fluid", name = "fluoroketone-hot", amount = 200, ignored_by_productivity = 200}
+            {type = "item", name = "rocket-part", amount = 50}
         },
         energy_required = 10,
-        category = "cryogenics",
+        category = "rocket-building",
         subgroup = "vgal-rocket-parts",
-        main_product = "rocket-part",
         enabled = false,
         allow_as_intermediate = false,
         auto_recycle = false,
@@ -1049,18 +1054,16 @@ data:extend{
         ingredients = {
             {type = "fluid", name = "thruster-fuel", amount = 5000},
             {type = "fluid", name = "thruster-oxidizer", amount = 5000},
-            {type = "fluid", name = "fluoroketone-cold", amount = 200},
+            {type = "fluid", name = "fluoroketone-cold", amount = 100},
             {type = "item", name = "lithium-plate", amount = 20},
-            {type = "item", name = "advanced-circuit", amount = 40}
+            {type = "item", name = "processing-unit", amount = 20}
         },
         results = {
             {type = "item", name = "rocket-part", amount = 150},
-            {type = "fluid", name = "fluoroketone-hot", amount = 200, ignored_by_productivity = 200}
         },
         energy_required = 10,
-        category = "cryogenics",
+        category = "rocket-building",
         subgroup = "vgal-rocket-parts",
-        main_product = "rocket-part",
         enabled = false,
         allow_as_intermediate = false,
         auto_recycle = false,
@@ -1162,6 +1165,135 @@ data:extend{
                 "none"
             }
         )
+    },
+    {
+        type = "recipe",
+        name = "vgal-scrap-crushing",
+        ingredients = {
+            {type = "item", name = "scrap", amount = 1}
+        },
+        results = {
+            {type = "item", name = "holmium-ore", amount = 1, probability = 0.5},
+            {type = "item", name = "steel-plate", amount = 1, probability = 0.08},
+            {type = "item", name = "stone", amount = 1, probability = 0.9},
+            {type = "item", name = "iron-ore", amount = 1},
+            {type = "item", name = "copper-ore", amount = 1},
+            {type = "item", name = "scrap", amount = 1, probability = 0.225}
+        },
+        energy_required = 5,
+        category = "crushing",
+        subgroup = "vgal-crushing",
+        enabled = false,
+        allow_as_intermediate = false,
+        auto_recycle = false,
+        allow_productivity = true,
+        icons = icons.recipe_icon(
+            nil,
+            {
+                {type = "item", name = "scrap"}
+            },
+            "crushing"
+        )
+    },
+    {
+        type = "recipe",
+        name = "vgal-iron-copper-cable",
+        ingredients = {
+            {type = "item", name = "iron-plate", amount = 1},
+            {type = "item", name = "copper-plate", amount = 2}
+        },
+        results = {
+            {type = "item", name = "copper-cable", amount = 10}
+        },
+        energy_required = 0.1,
+        category = "electronics",
+        subgroup = "vgal-basic-intermediate-products",
+        enabled = false,
+        allow_as_intermediate = false,
+        auto_recycle = false,
+        allow_productivity = true,
+        icons = icons.recipe_icon(
+            {
+                {type = "item", name = "copper-cable"}
+            },
+            {
+                {type = "item", name = "iron-plate"},
+                {type = "item", name = "copper-plate"}
+            }
+        )
+    },
+    {
+        type = "recipe",
+        name = "vgal-casting-iron-copper-cable",
+        ingredients = {
+            {type = "fluid", name = "molten-iron", amount = 5},
+            {type = "fluid", name = "molten-copper", amount = 10}
+        },
+        results = {
+            {type = "item", name = "copper-cable", amount = 10}
+        },
+        energy_required = 0.2,
+        category = "metallurgy",
+        subgroup = "vgal-intermediate-casting",
+        enabled = false,
+        allow_as_intermediate = false,
+        auto_recycle = false,
+        allow_productivity = true,
+        icons = icons.recipe_icon(
+            {
+                {type = "item", name = "copper-cable"}
+            },
+            nil,
+            "casting-iron-copper"
+        )
+    },
+    {
+        type = "recipe",
+        name = "vgal-very-high-temperature-heavy-oil-cracking",
+        ingredients = {
+            {type = "fluid", name = "steam", amount = 30, minimum_temperature = 500},
+            {type = "fluid", name = "heavy-oil", amount = 70}
+        },
+        results = {
+            {type = "fluid", name = "light-oil", amount = 60}
+        },
+        energy_required = 1,
+        category = "organic-or-chemistry",
+        subgroup = "vgal-oil-cracking",
+        order = "b[fluid-chemistry]-a[heavy-oil-cracking]",
+        enabled = false,
+        allow_as_intermediate = false,
+        auto_recycle = false,
+        allow_productivity = true,
+        icons = {
+            get_icon("recipe", "heavy-oil-cracking", {scale = 1}),
+            get_icon("fluid", "steam", {shift = {16, -16}}),
+            {icon = "__galore_lib__/graphics/overlays/heating-overlay.png", scale = 1}
+        }
+    },
+    {
+        type = "recipe",
+        name = "vgal-very-high-temperature-light-oil-cracking",
+        ingredients = {
+            {type = "fluid", name = "steam", amount = 30, minimum_temperature = 500},
+            {type = "fluid", name = "light-oil", amount = 60}
+        },
+        results = {
+            {type = "fluid", name = "petroleum-gas", amount = 50}
+        },
+        energy_required = 1,
+        category = "organic-or-chemistry",
+        subgroup = "vgal-oil-cracking",
+        order = "b[fluid-chemistry]-b[light-oil-cracking]",
+        enabled = false,
+        allow_as_intermediate = false,
+        auto_recycle = false,
+        allow_productivity = true,
+        icons = {
+            get_icon("recipe", "light-oil-cracking", {scale = 1}),
+            get_icon("fluid", "steam", {shift = {16, -16}}),
+            {icon = "__galore_lib__/graphics/overlays/heating-overlay.png", scale = 1}
+        }
     }
 }
 
@@ -1186,7 +1318,7 @@ add_recipe("lithium-processing", "vgal-lithium-plate-rocket-part")
 add_recipe("fusion-reactor", "vgal-lithium-plate-fusion-rocket-part")
 add_recipe("tungsten-steel", "vgal-tungsten-plate-engine-unit") -- recipe #20
 add_recipe("engine", "vgal-engine-unit-assembling-machine-1")
-add_recipe("biochamber", "vgal-jelly-advanced-circuit") -- everything after this has no locale
+add_recipe("biochamber", "vgal-jelly-advanced-circuit")
 add_recipe("space-platform", "vgal-carbon-lubricant")
 add_recipe("bioflux", "vgal-organic-rocket-part")
 add_recipe("kovarex-enrichment-process", "vgal-uranium-space-science-pack")
@@ -1205,6 +1337,11 @@ add_recipe("cryogenic-plant", "vgal-liquid-fuel-lithium-plate-rocket-part")
 add_recipe("quantum-processor", "vgal-quantum-cryogenic-science-pack")
 add_recipe("bioflux", "vgal-organic-processing-unit")
 add_recipe("holmium-processing", "vgal-holmium-plate-barrel") -- recipe #40
+add_recipe("recycling", "vgal-scrap-crushing") -- everything after this has no locale
+add_recipe("electronics", "vgal-iron-copper-cable")
+add_recipe("foundry", "vgal-casting-iron-copper-cable")
+add_recipe("advanced-oil-processing", "vgal-very-high-temperature-heavy-oil-cracking")
+add_recipe("advanced-oil-processing", "vgal-very-high-temperature-light-oil-cracking") -- recipe #45
 
 add_prod("processing-unit-productivity", "vgal-quantum-processing-unit")
 add_prod("processing-unit-productivity", "vgal-organic-processing-unit")
@@ -1214,26 +1351,9 @@ add_prod("rocket-part-productivity", "vgal-lithium-plate-fusion-rocket-part")
 add_prod("rocket-part-productivity", "vgal-organic-rocket-part")
 add_prod("rocket-part-productivity", "vgal-liquid-fuel-rocket-part")
 add_prod("rocket-part-productivity", "vgal-liquid-fuel-lithium-plate-rocket-part")
+add_prod("scrap-recycling-productivity", "vgal-scrap-crushing")
 
-data.raw["recipe"]["rocket-part"].category = "advanced-crafting"
-data.raw["recipe"]["vgal-engine-unit-rocket-part"].category = "advanced-crafting"
-data.raw["recipe"]["vgal-uranium-fuel-cell-rocket-part"].category = "advanced-crafting"
-data.raw["rocket-silo"]["rocket-silo"].fixed_recipe = "rocket-building"
-data.raw["item"]["rocket-part"].stack_size = 200
-
-data:extend{
-    {
-        type = "recipe",
-        name = "rocket-building",
-        ingredients = {
-            {type = "item", name = "rocket-part", amount = 1}
-        },
-        results = {
-            {type = "item", name = "rocket-part", amount = 1}
-        },
-        energy_required = 3,
-        category = "rocket-building",
-        hidden = true,
-        hidden_in_factoriopedia = true
-    }
-}
+-- data.raw["recipe"]["rocket-part"].category = "advanced-crafting"
+-- data.raw["recipe"]["vgal-engine-unit-rocket-part"].category = "advanced-crafting"
+-- data.raw["recipe"]["vgal-uranium-fuel-cell-rocket-part"].category = "advanced-crafting"
+-- data.raw["rocket-silo"]["rocket-silo"].fixed_recipe = "rocket-building"

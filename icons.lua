@@ -1,5 +1,11 @@
+meld = require("meld")
+
 local T = {}
 
+---@param results table?
+---@param ingredients table?
+---@param overlay string?
+---@return table
 function T.recipe_icon(results, ingredients, overlay)
     local icons = {}
     if results and #results > 3 then
@@ -11,14 +17,14 @@ function T.recipe_icon(results, ingredients, overlay)
     if overlay == nil then
         -- no overlay
         -- results
-        if #results == 1 then
+        if results and #results == 1 then
             ingredient = data.raw[results[1].type][results[1].name]
             if ingredient then
                 table.insert(icons, {icon = ingredient.icon, icon_size = ingredient.icon_size, shift = {0, 0}, scale = 1})
             else
                 error(results[1].type .. " " .. results[1].name .. " does not exist")
             end
-        elseif #results == 2 then
+        elseif results and #results == 2 then
             ingredient = data.raw[results[1].type][results[1].name]
             if ingredient then
                 table.insert(icons, {icon = ingredient.icon, icon_size = ingredient.icon_size, shift = {-8, 12}})
@@ -31,7 +37,7 @@ function T.recipe_icon(results, ingredients, overlay)
             else
                 error(results[2].type .. " " .. results[2].name .. " does not exist")
             end
-        elseif #results == 3 then
+        elseif results and #results == 3 then
             ingredient = data.raw[results[1].type][results[1].name]
             if ingredient then
                 table.insert(icons, {icon = ingredient.icon, icon_size = ingredient.icon_size, shift = {-16, 12}})
@@ -52,7 +58,7 @@ function T.recipe_icon(results, ingredients, overlay)
             end
         end
         -- ingredients
-        if #ingredients == 1 then
+        if ingredients and #ingredients == 1 then
             if ingredients[1] ~= "none" then
                 ingredient = data.raw[ingredients[1].type][ingredients[1].name]
                 if ingredient then
@@ -61,7 +67,7 @@ function T.recipe_icon(results, ingredients, overlay)
                     error(ingredients[1].type .. " " .. ingredients[1].name .. " does not exist")
                 end
             end
-        elseif #ingredients == 2 then
+        elseif ingredients and #ingredients == 2 then
             if ingredients[1] ~= "none" then
                 ingredient = data.raw[ingredients[1].type][ingredients[1].name]
                 if ingredient then
@@ -78,7 +84,7 @@ function T.recipe_icon(results, ingredients, overlay)
                     error(ingredients[2].type .. " " .. ingredients[2].name .. " does not exist")
                 end
             end
-        elseif #ingredients == 3 then
+        elseif ingredients and #ingredients == 3 then
             if ingredients[1] ~= "none" then
                 ingredient = data.raw[ingredients[1].type][ingredients[1].name]
                 if ingredient then
@@ -176,6 +182,19 @@ function T.recipe_icon(results, ingredients, overlay)
         table.insert(icons, {icon = "__galore_lib__/graphics/overlays/" .. overlay .. "-overlay.png", icon_size = 64})
     end
     return icons
+end
+
+function get_icon(type, name, properties)
+    prototype = data.raw[type][name]
+    if prototype.icon then
+        return meld({icon = prototype.icon}, properties)
+    else
+        icons = {}
+        for _, icon in pairs(prototype.icons) do
+            table.insert(icons, meld(icon, properties))
+        end
+        return table.unpack(icons)
+    end
 end
 
 return T
